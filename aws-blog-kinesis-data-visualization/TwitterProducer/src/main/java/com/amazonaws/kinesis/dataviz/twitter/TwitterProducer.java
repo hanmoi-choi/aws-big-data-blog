@@ -87,7 +87,7 @@ public class TwitterProducer {
 			
 			// Track  anything that is geo-tagged
 			// within a bounding box describing Australia
-			endpoint.addQueryParameter("locations", "-11,112,-44,154");
+			endpoint.addQueryParameter("locations", "-11,154,-44,112");
 
 			// These secrets should be read from a config file
 			Authentication hosebirdAuth = new OAuth1(consumerKey,
