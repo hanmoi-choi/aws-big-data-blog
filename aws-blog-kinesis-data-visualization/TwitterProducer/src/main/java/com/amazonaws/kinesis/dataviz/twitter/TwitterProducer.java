@@ -49,6 +49,7 @@ public class TwitterProducer {
 	private static final String TWIT_CONSUMER_SECRET = "twitter.consumerSecret";
 	private static final String TWIT_CONSUMER_KEY = "twitter.consumerKey";
 	private static final String HASHTAGS = "twitter.hashtags";
+	private static final String LOCATIONS = "twitter.locations";
 	private static final String STREAM_NAME = "aws.streamName";
 	private static final String DEFAULT_PROP_FILE_NAME = "AwsUserData";
 	private static final String REGION_NAME = "aws.regionName";
@@ -70,6 +71,8 @@ public class TwitterProducer {
 		String secret = System.getProperty(TWIT_SECRET);
 		String streamName = System.getProperty(STREAM_NAME);
 		String regionName = System.getProperty(REGION_NAME);
+		String boundingBox = System.getProperty(LOCATIONS);
+		String hashtags = System.getProperty(HASHTAGS);
 		
 		while (true) {
 			/**
@@ -87,7 +90,7 @@ public class TwitterProducer {
 			
 			// Track  anything that is geo-tagged
 			// within a bounding box describing Australia
-			endpoint.addQueryParameter("locations", "-11,154,-44,112");
+			endpoint.addQueryParameter("locations", boundingBox);
 
 			// These secrets should be read from a config file
 			Authentication hosebirdAuth = new OAuth1(consumerKey,
