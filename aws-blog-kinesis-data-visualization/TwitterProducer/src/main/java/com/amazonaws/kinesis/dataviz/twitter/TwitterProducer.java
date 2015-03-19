@@ -86,7 +86,8 @@ public class TwitterProducer {
 			StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
 			
 			// Track  anything that is geo-tagged
-			endpoint.addQueryParameter("locations", "-180,-90,180,90");
+			// within a bounding box describing Australia
+			endpoint.addQueryParameter("locations", "-11,112,-44,154");
 
 			// These secrets should be read from a config file
 			Authentication hosebirdAuth = new OAuth1(consumerKey,
