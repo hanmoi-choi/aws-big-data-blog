@@ -156,14 +156,11 @@ public class KinesisRecordProcessor implements IRecordProcessor {
                 	   jedis.publish("loc", jsonCoords);
                    }
 
-                   if(dest_c != null) {
+                   if(dest_c != null && dest_channel != null) {
                 	   String jsonCoords = mapper.writeValueAsString(dest_c);
                 	   jedis.publish("dest_loc", jsonCoords);
-                   }
-
-		   if(dest_channel != null) {
 			   jedis.publish("dest_channel", dest_channel);
-		   }
+                   }
       
 					
                    processedSuccessfully = true;
