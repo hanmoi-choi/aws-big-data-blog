@@ -128,13 +128,22 @@ public class KinesisRecordProcessor implements IRecordProcessor {
                    
                    JsonNode geo = node.findValue("geo");
                    JsonNode coords = geo.findValue("coordinates");
+
+		   JsonNode dest = node.findValue("destination");
+		   JsonNode dest_coords = dest.findValue("coordinates");
+		   JsonNode dest_channel = dest.findValue("channel");
                    
                    Iterator<JsonNode> elements = coords.elements();
+                   Iterator<JsonNode> dest_elements = dest_coords.elements();
                    
                    double lat = elements.next().asDouble();
                    double lng = elements.next().asDouble();
+
+                   double dest_lat = dest_elements.next().asDouble();
+                   double dest_lng = dest_elements.next().asDouble();
                    
                    c = new Coordinate(lat, lng);
+                   dest_c = new Coordinate(dest_lat, dest_lng);
                    
             	   } catch(Exception e) {
             		   // if we get here, its bad data, ignore and move on to next record
@@ -144,6 +153,16 @@ public class KinesisRecordProcessor implements IRecordProcessor {
                 	   String jsonCoords = mapper.writeValueAsString(c);
                 	   jedis.publish("loc", jsonCoords);
                    }
+
+                   if(dest_c != null) {
+                	   String jsonCoords = mapper.writeValueAsString(dest_c);
+                	   jedis.publish("dest_loc", jsonCoords);
+                   }
+
+		   if(dest_channel != null) {
+			   String channel = dest_channel.asText();
+			   jedis.publish("dest_channel", channel);
+		   }
       
 					
                    processedSuccessfully = true;
