@@ -119,6 +119,7 @@ public class KinesisRecordProcessor implements IRecordProcessor {
             	   
             	   Coordinate c = null;
             	   Coordinate dest_c = null;
+		   String dest_channel = "";
             	   
             	   try {
                    // For this app, we interpret the payload as UTF-8 chars.
@@ -132,7 +133,7 @@ public class KinesisRecordProcessor implements IRecordProcessor {
 
 		   JsonNode dest = node.findValue("destination");
 		   JsonNode dest_coords = dest.findValue("coordinates");
-		   JsonNode dest_channel = dest.findValue("channel");
+		   dest_channel = dest.findValue("channel").asText();
                    
                    Iterator<JsonNode> elements = coords.elements();
                    Iterator<JsonNode> dest_elements = dest_coords.elements();
@@ -161,8 +162,7 @@ public class KinesisRecordProcessor implements IRecordProcessor {
                    }
 
 		   if(dest_channel != null) {
-			   String channel = dest_channel.asText();
-			   jedis.publish("dest_channel", channel);
+			   jedis.publish("dest_channel", dest_channel);
 		   }
       
 					
