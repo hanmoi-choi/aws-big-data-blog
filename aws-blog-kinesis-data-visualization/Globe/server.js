@@ -31,13 +31,21 @@ redisClient.on('subscribe', function(channel, count) {
 
 // When we get a message from redis, we send the message down the socket to the client
 redisClient.on('message', function(channel, message) {	
-	var coord = JSON.parse(message);
-	io.emit('tweet', coord);
+	var msg = JSON.parse(message);
+	console.log('channel is %s', msg.channel);
+	console.log('coords is %s', msg.coords);
+	console.log('got a message: %s', message);
+	switch (channel) {
+		case 'loc': break; // io.emit('tweet', coord); break;
+		case 'dest_loc': io.emit(msg.channel, msg.coords); break;
+		default: console.log('eeeek'); break;
+	}
 });
 
 // subscribe to listen to events from redis
 redisClient.on("ready", function () {		
 	redisClient.subscribe("loc");
+	redisClient.subscribe("dest_loc");
 });
 
 // log that someone has connected via sockets (they are now listening for redis events)

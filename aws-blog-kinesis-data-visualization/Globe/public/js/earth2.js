@@ -79,7 +79,7 @@
 			geometry.vertices.push( vertex );
 			
 			values_size[ i ] = 0.1;
-			values_color[ i ] = new THREE.Color( 0xffaa00 );
+			values_color[ i ] = new THREE.Color( 0xff0000 );
 
 		}
 
@@ -182,6 +182,14 @@
 	
 	socket.on('tweet', function(coord) {
 		startLight(coord.lat, coord.lng, 10000);
+	});
+
+	socket.on('buy', function(coord) {
+		startLight(coord.lat, coord.lng, 2000, 0xAF0000);
+	});
+
+	socket.on('rent', function(coord) {
+		startLight(coord.lat, coord.lng, 2000, 0xAF00AF);
 	});
 
 	render();

@@ -248,6 +248,14 @@
 		startLight(coord.lat, coord.lng, 2000, 0x6DAEE1);
 	});
 
+	socket.on('buy', function(coord) {
+		startLight(coord.lat, coord.lng, 2000, 0xAF0000);
+	});
+
+	socket.on('rent', function(coord) {
+		startLight(coord.lat, coord.lng, 2000, 0xAF00AF);
+	});
+
 	render();
 	
 
