@@ -118,6 +118,7 @@ public class KinesisRecordProcessor implements IRecordProcessor {
                try {
             	   
             	   Coordinate c = null;
+            	   Coordinate dest_c = null;
             	   
             	   try {
                    // For this app, we interpret the payload as UTF-8 chars.
