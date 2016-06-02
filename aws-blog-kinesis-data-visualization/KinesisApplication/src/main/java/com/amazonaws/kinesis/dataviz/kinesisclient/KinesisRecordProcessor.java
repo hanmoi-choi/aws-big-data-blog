@@ -158,8 +158,8 @@ public class KinesisRecordProcessor implements IRecordProcessor {
 
                    if(dest_c != null && dest_channel != null) {
                 	   String jsonCoords = mapper.writeValueAsString(dest_c);
-                	   jedis.publish("dest_loc", jsonCoords);
-			   jedis.publish("dest_channel", dest_channel);
+			   String jsonMsg = "{\"coords\":" + jsonCoords + ",\"channel\":\"" + dest_channel + "\"}";
+                	   jedis.publish("dest_loc", jsonMsg);
                    }
       
 					
